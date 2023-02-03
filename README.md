@@ -1,6 +1,6 @@
 # Wait for workflows Github Action
 
-![Build status](https://github.com/willgarcia/workflow-wait-action/workflows/build-test/badge.svg)
+![Build status](https://github.com/ygqygq2/workflow-wait-action/workflows/build-test/badge.svg)
 
 A GitHub Action that waits for workflows in progress to complete before resuming and running a parent workflow.
 
@@ -35,7 +35,7 @@ jobs:
   always_last:
     steps:
       - name: Pause until all workflows are completed
-        uses: willgarcia/workflow-wait-action@v0.1.0
+        uses: ygqygq2/workflow-wait-action@v1
 
       - name: Resume and run once, after all workflows are completed
         run: date
@@ -50,12 +50,13 @@ jobs:
   always_last:
     steps:
       - name: Pause until all workflows are completed
-        uses: willgarcia/workflow-wait-action@v0.1.0
+        uses: ygqygq2/workflow-wait-action@v1
         with:
           access_token: ${{ secrets.GITHUB_TOKEN }}
           timeout: 600
           interval: 10
-          initial_delay: 30
+          initial_delay: 0
+          associated_workflows: false
 
       - name: Resume and run once, after all workflows are completed
         run: date
@@ -68,7 +69,8 @@ jobs:
 | access_token  | Your GitHub Access Token                                                                                                 | No         | `{{ github.token }}` |                                   |
 | timeout       | Action timeout. If in-progress workflows are not completed within the timeout period, the Action will fails the workflow | No         | 600                  |                                   |
 | interval      | Interval used to poll the status of the workflows                                                                        | No         | 10                   |                                   |
-| initial_delay | Initial delay used to give minimal time to all workflows to be queued & started                                          | No         | 30                   |                                   |
+| initial_delay | Initial delay used to give minimal time to all workflows to be queued & started                                          | No         | 0                    |                                   |
+| associated_workflows| Wait workflow runs that are associated with the head_sha. If set to true, the action will wait for all workflows that are associated with this workflow with the same head_sha     |  No | false  |  |
 | workflows     | List of workflows to wait for. Must be a multiline string using                                                          | No         | ''                   | \| <br/>workflow-1<br/>workflow-2 |
 
 ## Limitations

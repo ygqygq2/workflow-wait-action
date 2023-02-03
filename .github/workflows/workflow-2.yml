@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - release/0.2.0
+      - 'releases/**'
     paths:
       - .github/workflows/workflow-2.yml
 
@@ -15,5 +15,7 @@ jobs:
       - name: Workflow 2 Test
         shell: bash
         run: |
+          date
+          echo "sleep 45s"
           sleep 45
           date

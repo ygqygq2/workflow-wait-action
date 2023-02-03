@@ -1,42 +1,40 @@
-import * as core from '@actions/core'
-import { oneSecond, ActionStatus } from './config'
-import { filterGithubWorkflows, GithubWorkflow } from './github'
+import * as core from '@actions/core';
+import { oneSecond, ActionStatus } from './config';
+import { filterGithubWorkflows, GithubWorkflow } from './github';
 
 const wait = async (ms: number): Promise<string> => {
-  const promise = (resolve: (message: string) => void) =>
-    setTimeout(() => resolve(`waited ${ms}ms`), ms)
-  return new Promise(promise)
-}
+  const promise = (resolve: (message: string) => void) => setTimeout(() => resolve(`waited ${ms}ms`), ms);
+  core.info(typeof promise);
+  return new Promise(promise);
+};
 
-const delay = (interval: number) => wait(interval * oneSecond)
+const delay = async (interval: number) => wait(interval * oneSecond);
 
 const poll = async (
   options: {
-    timeout: number
-    interval: number
+    timeout: number;
+    interval: number;
   },
-  log: (retries: number, workflows: GithubWorkflow[]) => void
+  log: (retries: number, workflows: GithubWorkflow[]) => void,
 ): Promise<string> => {
-  let now = new Date().getTime()
-  const end = now + options.timeout * oneSecond
+  let now = new Date().getTime();
+  const end = now + options.timeout * oneSecond;
 
-  let retries = 1
+  let retries = 1;
   while (now <= end) {
-    const workflows = await filterGithubWorkflows()
+    const workflows = await filterGithubWorkflows();
     if (workflows.length === 0) {
-      return ActionStatus.WORKFLOWS_AWAITED_OK
+      return ActionStatus.WORKFLOWS_AWAITED_OK;
     }
-    log(retries, workflows as GithubWorkflow[])
+    log(retries, workflows as GithubWorkflow[]);
 
-    await delay(options.interval)
-    now = new Date().getTime()
-    retries++
+    await delay(options.interval);
+    now = new Date().getTime();
+    retries++;
   }
 
-  core.error(
-    `😿 Timeout exceeded (${options.timeout} seconds). Consider increasing the value of "timeout"`
-  )
-  return ActionStatus.TIMEOUT_EXCEEDED
-}
+  core.error(`😿 Timeout exceeded (${options.timeout} seconds). Consider increasing the value of "timeout"`);
+  return ActionStatus.TIMEOUT_EXCEEDED;
+};
 
-export { poll, delay }
+export { poll, delay };

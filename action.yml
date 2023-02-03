@@ -18,7 +18,11 @@ inputs:
     required: false
   initial_delay:
     description: 'Initial delay used to give minimal time to all workflows to be queued & started'
-    default: '30'
+    default: '0'
+    required: false
+  associated_workflows:
+    description: 'Wait workflow runs that are associated with the head_sha. If set to true, the action will wait for all workflows that are associated with this workflow with the same head_sha'
+    default: 'false'
     required: false
   workflows:
     description: 'List of workflows to wait for. Must be a multiline string using |'
@@ -26,5 +30,5 @@ inputs:
     required: false
 
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'dist/index.js'

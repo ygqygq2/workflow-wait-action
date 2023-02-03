@@ -4,22 +4,27 @@ on:
   push:
     branches:
       - main
-      - release/0.2.0
+      - 'releases/**'
+  workflow_dispatch:
 
 jobs:
   workflow_last:
     runs-on: ubuntu-latest
     steps:
       - name: Code checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
+      - name: Before waiting for workflows to complete
+        run: date
 
       - name: Pause until all workflows are completed
         uses: ./
-        with: 
+        with:
           access_token: ${{ secrets.GITHUB_TOKEN }}
           timeout: 60
           interval: 10
-          initial_delay: 5
+          initial_delay: 30
+          associated_workflows: true
           workflows: |
             workflow-1
 

@@ -1,29 +1,39 @@
-import * as core from '@actions/core'
+import { getInput, info as core_info } from '@actions/core';
 
-const oneSecond = 1000
+interface ActionConfig {
+  timeout: number;
+  interval: number;
+  initial_delay: number;
+  associated_workflows: boolean;
+}
 
+const oneSecond = 1000;
+
+// eslint-disable-next-line no-shadow
 enum ActionStatus {
   WORKFLOWS_AWAITED_OK = 'workflows_awaited_ok',
   TIMEOUT_EXCEEDED = 'action_timeout_exceeded',
 }
 
-const config = () => {
-  const config = {
-    timeout: parseInt(core.getInput('timeout')),
-    interval: parseInt(core.getInput('interval')),
-    initial_delay: parseInt(core.getInput('initial_delay')),
-  }
+const config = (): ActionConfig => {
+  const actionConfig = {
+    timeout: parseInt(getInput('timeout')) || 600,
+    interval: parseInt(getInput('interval')) || 10,
+    initial_delay: parseInt(getInput('initial_delay')) || 0,
+    associated_workflows: getInput('associated_workflows') === 'true' || false,
+  };
 
   const info = [
     `Action configuration:`,
-    `${config.initial_delay}s initial delay,`,
-    `${config.interval}s interval,`,
-    `${config.timeout}s timeout`,
-  ]
-  core.info(info.join(' '))
-  core.info('')
+    `${actionConfig.initial_delay}s initial delay,`,
+    `${actionConfig.interval}s interval,`,
+    `${actionConfig.timeout}s timeout`,
+    `Associated workflows: ${actionConfig.associated_workflows}`,
+  ];
+  core_info(info.join(' '));
+  core_info('');
 
-  return config
-}
+  return actionConfig;
+};
 
-export { oneSecond, ActionStatus, config }
+export { oneSecond, ActionStatus, config };
