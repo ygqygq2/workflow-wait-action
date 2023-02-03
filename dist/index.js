@@ -9618,12 +9618,14 @@ const config = () => {
         timeout: parseInt((0, core_1.getInput)('timeout')) || 600,
         interval: parseInt((0, core_1.getInput)('interval')) || 10,
         initial_delay: parseInt((0, core_1.getInput)('initial_delay')) || 0,
+        associated_workflows: (0, core_1.getInput)('associated_workflows') === 'true' || false,
     };
     const info = [
         `Action configuration:`,
         `${actionConfig.initial_delay}s initial delay,`,
         `${actionConfig.interval}s interval,`,
         `${actionConfig.timeout}s timeout`,
+        `Associated workflows: ${actionConfig.associated_workflows}`,
     ];
     (0, core_1.info)(info.join(' '));
     (0, core_1.info)('');
@@ -9666,6 +9668,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.logGithubWorkflows = exports.filterGithubWorkflows = void 0;
 const core = __importStar(__nccwpck_require__(7733));
 const github = __importStar(__nccwpck_require__(3695));
+const config_1 = __nccwpck_require__(7296);
 const getGithubWorkflows = async () => {
     const client = github.getOctokit(core.getInput('access_token', { required: true }));
     return Promise.all(['queued', 'in_progress']
@@ -9686,9 +9689,12 @@ const filterGithubWorkflows = async () => {
         required: false,
     });
     core.info(JSON.stringify(workflowsInput));
+    const { associated_workflows } = (0, config_1.config)();
+    const filterOption = (headSha) => (associated_workflows ? headSha === currentSHA : true);
+    const currentRunId = Number(process.env.GITHUB_RUN_ID);
     return workflows
         .flatMap((response) => response.data.workflow_runs)
-        .filter((run) => run.id !== Number(process.env.GITHUB_RUN_ID) && run.status !== 'completed' && run.head_sha === currentSHA)
+        .filter((run) => run.id < currentRunId && run.id !== currentRunId && run.status !== 'completed' && filterOption(run.head_sha))
         .filter((run) => {
         if (!run.name) {
             throw Error(`Workflow name not found for run ${JSON.stringify(run)}`);
@@ -9701,8 +9707,8 @@ const filterGithubWorkflows = async () => {
 };
 exports.filterGithubWorkflows = filterGithubWorkflows;
 const logGithubWorkflows = (retries, workflows) => {
-    return;
-    core.info(`Retry #${retries} - ${workflows.length} ${workflows.length > 1 ? 'workflows' : 'workflow'} in progress found. Please, wait until completion or consider cancelling these workflows manually:`);
+    core.info(`Retry #${retries} - ${workflows.length} ${workflows.length > 1 ? 'workflows' : 'workflow'}
+    in progress found. Please, wait until completion or consider cancelling these workflows manually:`);
     workflows.map((workflow) => {
         core.info(`* ${workflow.name}: ${workflow.status}`);
     });

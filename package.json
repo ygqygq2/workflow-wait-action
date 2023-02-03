@@ -51,7 +51,7 @@
     "zhlint": "^0.7.1"
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpm lint-staged",
+    "pre-commit": "pnpm lint-staged && pnpm git:pre-commit",
     "preserveUnused": true
   },
   "config": {

@@ -74,9 +74,8 @@ type GithubWorkflow = { name: string; status: string };
 
 const logGithubWorkflows = (retries: number, workflows: GithubWorkflow[]) => {
   core.info(
-    `Retry #${retries} - ${workflows.length} ${
-      workflows.length > 1 ? 'workflows' : 'workflow'
-    } in progress found. Please, wait until completion or consider cancelling these workflows manually:`,
+    `Retry #${retries} - ${workflows.length} ${workflows.length > 1 ? 'workflows' : 'workflow'}
+    in progress found. Please, wait until completion or consider cancelling these workflows manually:`,
   );
   workflows.map((workflow: GithubWorkflow) => {
     core.info(`* ${workflow.name}: ${workflow.status}`);
