@@ -1,5 +1,5 @@
-name: 'Workflow Wait Action'
-description: 'Wait and run a workflow after all other workflows are completed'
+name: 'Wait Last Action'
+description: 'Waiting for last action run complete.'
 branding:
   icon: 'aperture'
   color: 'blue'
