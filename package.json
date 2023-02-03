@@ -1,6 +1,6 @@
 {
   "name": "workflow-wait-action",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "main": "dist/index.js",
   "author": "William Garcia <garcia.rodriguez.william@gmail.com> ygqygq2 <ygqygq2@qq.com>",
   "license": "MIT",
@@ -29,10 +29,13 @@
     "@actions/github": "^5.1.1"
   },
   "devDependencies": {
+    "@commitlint/config-conventional": "^17.4.2",
     "@types/node": "^18.11.18",
     "@typescript-eslint/eslint-plugin": "^5.50.0",
     "@typescript-eslint/parser": "^5.50.0",
     "@vercel/ncc": "^0.36.1",
+    "bumpp": "^8.2.1",
+    "commitizen": "^4.3.0",
     "cz-git": "^1.4.1",
     "eslint": "^8.33.0",
     "eslint-config-prettier": "^8.6.0",
