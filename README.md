@@ -1,8 +1,8 @@
-# Wait for workflows Github Action
+# Wait Last Action
 
 [![Build status](https://github.com/ygqygq2/workflow-wait-action/actions/workflows/build.yml/badge.svg)](https://github.com/ygqygq2/workflow-wait-action/actions/workflows/build.yml)
 
-A GitHub Action that waits for workflows in progress to complete before resuming and running a parent workflow.
+A GitHub Action that waiting for last action run complete.
 
 ## Scenarios of use
 
