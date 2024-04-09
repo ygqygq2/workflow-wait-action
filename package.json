@@ -2,7 +2,8 @@
   "name": "workflow-wait-action",
   "version": "1.0.0",
   "main": "dist/index.js",
-  "author": "William Garcia <garcia.rodriguez.william@gmail.com> ygqygq2 <ygqygq2@qq.com>",
+  "type": "module",
+  "author": "ygqygq2 <ygqygq2@qq.com>",
   "license": "MIT",
   "keywords": [
     "actions",
