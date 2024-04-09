@@ -46,7 +46,7 @@ const filterGithubWorkflows = async () => {
   const workflowsInput = core.getMultilineInput('workflows', {
     required: false,
   });
-  core.info(JSON.stringify(workflowsInput));
+  // core.info(JSON.stringify(workflowsInput));
 
   // Not waiting for other bigger run id workflows to finish
   const { associated_workflows } = config();

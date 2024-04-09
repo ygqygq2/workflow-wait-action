@@ -4,7 +4,7 @@ import { filterGithubWorkflows, GithubWorkflow } from './github';
 
 const wait = async (ms: number): Promise<string> => {
   const promise = (resolve: (message: string) => void) => setTimeout(() => resolve(`waited ${ms}ms`), ms);
-  core.info(typeof promise);
+  // core.info(typeof promise);
   return new Promise(promise);
 };
 

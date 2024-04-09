@@ -9,7 +9,7 @@ interface ActionConfig {
 
 const oneSecond = 1000;
 
-// eslint-disable-next-line no-shadow
+ 
 enum ActionStatus {
   WORKFLOWS_AWAITED_OK = 'workflows_awaited_ok',
   TIMEOUT_EXCEEDED = 'action_timeout_exceeded',

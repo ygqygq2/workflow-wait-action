@@ -9,8 +9,8 @@ async function main(): Promise<void> {
     await delay(initial_delay);
     await poll({ timeout, interval }, logGithubWorkflows);
     core.info('👌 Previous Github workflows completed. Resuming...');
-  } catch (e: any) {
-    core.setFailed((e.message as string) || '😿 Action failed');
+  } catch (e: unknown) {
+    core.setFailed(((e as Error)?.message as string) || '😿 Action failed');
     return;
   }
   return;
