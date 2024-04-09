@@ -38,13 +38,10 @@
     "commitizen": "^4.3.0",
     "cz-git": "^1.9.1",
     "eslint": "^9.0.0",
-    "jest": "29.7.0",
     "js-yaml": "^4.1.0",
     "lint-staged": "^15.2.2",
-    "prettier": "^3.2.5",
     "rimraf": "^5.0.5",
     "simple-git-hooks": "^2.11.1",
-    "ts-jest": "^29.1.2",
     "typescript": "^5.4.4",
     "typescript-eslint": "^7.6.0"
   },
