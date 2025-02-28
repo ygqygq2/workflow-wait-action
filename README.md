@@ -35,7 +35,7 @@ jobs:
   always_last:
     steps:
       - name: Pause until all workflows are completed
-        uses: ygqygq2/workflow-wait-action@v1
+        uses: ygqygq2/workflow-wait-action@v2
 
       - name: Resume and run once, after all workflows are completed
         run: date
@@ -50,7 +50,7 @@ jobs:
   always_last:
     steps:
       - name: Pause until all workflows are completed
-        uses: ygqygq2/workflow-wait-action@v1
+        uses: ygqygq2/workflow-wait-action@v2
         with:
           access_token: ${{ secrets.GITHUB_TOKEN }}
           timeout: 600
